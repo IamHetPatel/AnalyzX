@@ -10,15 +10,12 @@ const connectDB = async () => {
     mongoose.connect("mongodb+srv://blkbox:anshbouboleche@cluster0.3wzymdh.mongodb.net/?retryWrites=true&w=majority")
         .then(() => {
             console.log("connection is successful");
+            // User.deleteMany({tandc_enq:true, visited_sponsor:false,followup_enquiry:false})
         })
         .catch((err) => {
             console.log(err + "not connected");
         });
 }
-
-// app.get('/', (req, res) => {
-//     res.send('Hello World');
-// })
 
 app.post('/users', async (req, res) => {
 
@@ -29,7 +26,8 @@ app.post('/users', async (req, res) => {
         application_date: new Date(),
         cgpa: req.body.cgpa,
         city: req.body.city,
-        age: req.body.age
+        age: req.body.age,
+        applied:req.body.applied
     });
     await user.save()
         .then((result) => {
@@ -47,69 +45,48 @@ app.post('/users', async (req, res) => {
 });
 
 app.get('/', async (req, res) => {
-    if (req.query.view) {
-        const users = await User.find({
-            viewed: true,
-            revisited : false,
-            bookmarked: false,
-            tandc_enq: false,
-            visited_sponsor: false,
-            followup_enquiry: false,
-            download_brochure:false,
-            aaplied: false,
-            documents_uploaded: false,
-            documents_verified: false,
-            documents_rejected: false,
-            documents_reupload: false,
-            user_accepted: false,
-            user_rejected: false,
-            user_inwaitlist: false,
-            email_sent: false,
-            enquired: false,
-            successful: false
-        });
+    const key = req.query.quer
+    if (key) {
+        const obj = {
+            [key]:true
+        }
+        // console.log(obj);
+        const users = await User.find(obj);
+        // console.log(users);
         res.send(users);
         return
     }
     res.send("not found")
 })
 
-app.get('/', async (req, res) => {
-    if (req.query.revisited) {
-        const users = await User.find({
-            viewed: true,
-            revisited : true,
-            bookmarked: false,
-            tandc_enq: false,
-            visited_sponsor: false,
-            followup_enquiry: false,
-            download_brochure:false,
-            aaplied: false,
-            documents_uploaded: false,
-            documents_verified: false,
-            documents_rejected: false,
-            documents_reupload: false,
-            user_accepted: false,
-            user_rejected: false,
-            user_inwaitlist: false,
-            email_sent: false,
-            enquired: false,
-            successful: false
-        });
-        res.send(users, users.length);
-        return
-    }
-    res.send("not found")
-})
-
-
-
-
-
-
-
+// app.get('/', async (req, res) => {
+//     if (req.query.revisited) {
+//         const users = await User.find({
+//             viewed: true,
+//             revisited : true,
+//             bookmarked: false,
+//             tandc_enq: false,
+//             visited_sponsor: false,
+//             followup_enquiry: false,
+//             download_brochure:false,
+//             applied: false,
+//             documents_uploaded: false,
+//             documents_verified: false,
+//             documents_rejected: false,
+//             documents_reupload: false,
+//             user_accepted: false,
+//             user_rejected: false,
+//             user_inwaitlist: false,
+//             email_sent: false,
+//             enquired: false,
+//             successful: false
+//         });
+//         res.send(users, users.length);
+//         return
+//     }
+//     res.send("not found")
+// })
 app.listen(3000, () => {
-
     console.log('Server running on port 3000');
     connectDB();
 })

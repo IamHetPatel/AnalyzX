@@ -31,7 +31,7 @@ const user = new mongoose.Schema({
     },
     viewed : {
         type: Boolean,
-        default: false
+        default: true
     },
     revisited : {
         type: Boolean,
@@ -43,11 +43,11 @@ const user = new mongoose.Schema({
     },
     tandc_enq : {
         type: Boolean,
-        default: false
+        default: true
     },
     visited_sponsor : {
         type: Boolean,
-        default: false
+        default: true
     },
     followup_enquiry : {
         type: Boolean,
@@ -57,7 +57,7 @@ const user = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    aaplied : {
+    applied : {
         type: Boolean,
         default: false
     },
