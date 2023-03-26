@@ -27,7 +27,7 @@ app.post('/users', async (req, res) => {
         cgpa: req.body.cgpa,
         city: req.body.city,
         age: req.body.age,
-        applied:req.body.applied
+        applied: req.body.applied
     });
     await user.save()
         .then((result) => {
@@ -48,7 +48,7 @@ app.get('/', async (req, res) => {
     const key = req.query.quer
     if (key) {
         const obj = {
-            [key]:true
+            [key]: true
         }
         // console.log(obj);
         const users = await User.find(obj);
@@ -57,6 +57,67 @@ app.get('/', async (req, res) => {
         return
     }
     res.send("not found")
+})
+
+app.get('/count/', async (req, res) => {
+    const key = req.query.quer
+    if (key) {
+        const obj = {
+            [key]: true
+        }
+        // console.log(obj);
+        const users = await User.find(obj);
+        const len =  users.length 
+        // console.log(users);
+        res.status(200).send({len});
+        return
+    }
+    res.send("not found")
+})
+
+
+app.post('/set_user', async (req, res) => {
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        application_date: new Date(),
+        cgpa: req.body.cgpa,
+        city: req.body.city,
+        age: req.body.age,
+        viewed: req.body.viewed,
+        revisited: req.body.revisited,
+        bookmarked: req.body.bookmarked,
+        tandc_enq: req.body.tandc_enq,
+        visited_sponsor: req.body.visited_sponsor,
+        followup_enquiry: req.body.followup_enquiry,
+        download_brochure: req.body.download_brochure,
+        applied: req.body.applied,
+        documents_uploaded: req.body.documents_verified,
+        documents_verified: req.body.documents_verified,
+        documents_rejected: req.body.documents_rejected,
+        documents_reupload: req.body.documents_reupload,
+        user_accepted: req.body.user_accepted,
+        user_rejected: req.body.user_rejected,
+        user_inwaitlist: req.body.user_inwaitlist,
+        email_sent: req.body.email_sent,
+        enquired: req.body.enquired,
+        successful: req.body.successful
+    })
+
+    await user.save()
+    .then((result) => {
+        res.status(201).json({
+            message: "User created successfully",
+            user: result
+        });
+    })
+    .catch((err) => {
+        res.status(500).json({
+            message: "User not created",
+            error: err
+        });
+    });
 })
 
 // app.get('/', async (req, res) => {
