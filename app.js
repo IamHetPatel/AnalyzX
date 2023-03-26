@@ -78,6 +78,27 @@ app.get('/count/', async (req, res) => {
     res.send("not found")
 })
 
+app.get('/count/nodes', async (req, res) => {
+    const key1 = req.query.quer1
+    const key2 = req.query.quer2
+    if (key1 && key2) {
+        const obj = {
+            [key1]: true,
+            [key2]: true
+
+        }
+        // console.log(obj);
+        const users = await User.find(obj);
+        const len =  users.length 
+        // console.log(users);
+        res.status(200).send({len});
+        return
+    }
+    res.send("not found")
+})
+
+
+
 
 app.post('/set_user', async (req, res) => {
     const user = new User({
