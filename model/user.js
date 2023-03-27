@@ -43,11 +43,11 @@ const user = new mongoose.Schema({
     },
     tandc_enq : {
         type: Boolean,
-        default: true
+        default: false
     },
     visited_sponsor : {
         type: Boolean,
-        default: true
+        default: false
     },
     followup_enquiry : {
         type: Boolean,

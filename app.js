@@ -2,7 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const User = require('./model/user');
 const cors = require("cors")
+const dotenv = require("dotenv")
 
+dotenv.config()
 
 
 const app = express();
@@ -10,7 +12,8 @@ app.use(cors())
 app.use(express.json())
 
 const connectDB = async () => {
-    mongoose.connect("mongodb+srv://blkbox:anshbouboleche@cluster0.3wzymdh.mongodb.net/?retryWrites=true&w=majority")
+    mongoose.set('strictQuery', true)
+    mongoose.connect(process.env.MONGOURL)
         .then(() => {
             console.log("connection is successful");
             // User.deleteMany({tandc_enq:true, visited_sponsor:false,followup_enquiry:false})
